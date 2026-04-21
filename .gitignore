@@ -3,3 +3,5 @@ dist/
 .env
 .env.*
 serviceAccountKey.json
+# Firebase service account keys — never commit
+*firebase-adminsdk*.json
