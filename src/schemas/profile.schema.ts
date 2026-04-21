@@ -20,11 +20,8 @@ export const SkillSchema = z.object({
 export const ExperienceSchema = z.object({
   company: z.string().min(1),
   role: z.string().min(1),
-  'Start Date': z.string().regex(/^\d{4}-\d{2}$/, 'Format must be YYYY-MM'),
-  'End Date': z.union([
-    z.string().regex(/^\d{4}-\d{2}$/, 'Format must be YYYY-MM'),
-    z.literal('Present'),
-  ]),
+  'Start Date': z.string().default(''),
+  'End Date': z.string().default(''),
   description: z.string().default(''),
   technologies: z.array(z.string()).default([]),
   'Is Current': z.boolean().default(false),
@@ -36,8 +33,8 @@ export const EducationSchema = z.object({
   institution: z.string().min(1),
   degree: z.string().min(1),
   'Field of Study': z.string().default(''),
-  'Start Year': z.number().int().min(1950).max(2100),
-  'End Year': z.number().int().min(1950).max(2100),
+  'Start Year': z.number().int().catch(2000),
+  'End Year': z.number().int().catch(2024),
 });
 
 // ─── Certification ────────────────────────────────────────────────────────────
@@ -45,7 +42,7 @@ export const EducationSchema = z.object({
 export const CertificationSchema = z.object({
   name: z.string().min(1),
   issuer: z.string().min(1),
-  'Issue Date': z.string().regex(/^\d{4}-\d{2}$/, 'Format must be YYYY-MM'),
+  'Issue Date': z.string().default(''),
 });
 
 // ─── Project ──────────────────────────────────────────────────────────────────
@@ -55,9 +52,9 @@ export const ProjectSchema = z.object({
   description: z.string().default(''),
   technologies: z.array(z.string()).default([]),
   role: z.string().default(''),
-  link: z.string().url().optional().or(z.literal('')),
-  'Start Date': z.string().regex(/^\d{4}-\d{2}$/).optional().or(z.literal('')),
-  'End Date': z.string().regex(/^\d{4}-\d{2}$/).optional().or(z.literal('')),
+  link: z.string().catch(''),
+  'Start Date': z.string().catch(''),
+  'End Date': z.string().catch(''),
 });
 
 // ─── Language ─────────────────────────────────────────────────────────────────
@@ -78,9 +75,9 @@ export const AvailabilitySchema = z.object({
 // ─── Social Links ─────────────────────────────────────────────────────────────
 
 export const SocialLinksSchema = z.object({
-  linkedin: z.string().url().optional().or(z.literal('')),
-  github: z.string().url().optional().or(z.literal('')),
-  portfolio: z.string().url().optional().or(z.literal('')),
+  linkedin: z.string().catch(''),
+  github: z.string().catch(''),
+  portfolio: z.string().catch(''),
 }).optional();
 
 // ─── Full Profile Schema ──────────────────────────────────────────────────────
