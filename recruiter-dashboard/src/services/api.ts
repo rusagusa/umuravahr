@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
 export const api = {
   get: async (endpoint: string) => {
@@ -15,6 +15,17 @@ export const api = {
       body: JSON.stringify(data),
     });
     if (!response.ok) throw new Error(`POST ${endpoint} failed`);
+    return response.json();
+  },
+  patch: async (endpoint: string, data: any) => {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error(`PATCH ${endpoint} failed`);
     return response.json();
   },
   postForm: async (endpoint: string, formData: FormData) => {

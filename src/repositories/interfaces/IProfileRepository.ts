@@ -21,6 +21,9 @@ export interface IProfileRepository {
   /** Replace an existing profile's data. Returns the updated document. */
   update(id: string, data: Partial<IProfile>): Promise<IProfile | null>;
 
+  /** Specifically updates the pipeline state of a candidate */
+  updateStatus(id: string, status: 'pending' | 'shortlisted' | 'rejected'): Promise<IProfile | null>;
+
   /** Remove a profile. */
   delete(id: string): Promise<void>;
 }

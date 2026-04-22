@@ -96,6 +96,7 @@ export const ProfileSchema = z.object({
   projects: z.array(ProjectSchema).default([]),
   languages: z.array(LanguageSchema).optional().default([]),
   availability: AvailabilitySchema,
+  status: z.enum(['pending', 'shortlisted', 'rejected']).default('pending'),
   socialLinks: SocialLinksSchema,
 });
 

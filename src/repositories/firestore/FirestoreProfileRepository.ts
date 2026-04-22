@@ -40,6 +40,15 @@ export class FirestoreProfileRepository implements IProfileRepository {
     return { id, ...snap.data(), ...updated } as IProfile;
   }
 
+  async updateStatus(id: string, status: 'pending' | 'shortlisted' | 'rejected'): Promise<IProfile | null> {
+    const ref = getDb().collection(COLLECTION).doc(id);
+    const snap = await ref.get();
+    if (!snap.exists) return null;
+    const updated = { status, updatedAt: new Date().toISOString() };
+    await ref.update(updated);
+    return { id, ...snap.data(), ...updated } as unknown as IProfile;
+  }
+
   async delete(id: string): Promise<void> {
     await getDb().collection(COLLECTION).doc(id).delete();
   }

@@ -14,6 +14,9 @@ export function createProfileRouter(controller: ProfileController): Router {
   /** GET /api/profiles/:id — get one profile by ID */
   router.get('/:id', controller.getById);
 
+  /** PATCH /api/profiles/:id/status — update recruitment state */
+  router.patch('/:id/status', controller.updateStatus);
+
   /**
    * POST /api/profiles/structured
    * Accepts JSON body matching the Umurava Talent Profile Schema.

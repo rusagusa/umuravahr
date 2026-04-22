@@ -94,4 +94,27 @@ export class ProfileController {
       next(err);
     }
   };
+
+  /**
+   * PATCH /api/profiles/:id/status
+   * Updates the candidate's active pipeline status
+   */
+  updateStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { status } = req.body;
+      if (!['pending', 'shortlisted', 'rejected'].includes(status)) {
+        res.status(400).json({ success: false, message: 'Invalid status. Must be pending, shortlisted, or rejected.' });
+        return;
+      }
+      
+      const profile = await this.profileRepo.updateStatus(req.params.id, status as 'pending'|'shortlisted'|'rejected');
+      if (!profile) {
+        res.status(404).json({ success: false, message: 'Profile not found.' });
+        return;
+      }
+      res.json({ success: true, data: profile });
+    } catch (err) {
+      next(err);
+    }
+  };
 }

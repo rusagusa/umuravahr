@@ -28,8 +28,14 @@ export default function ProfilePanel() {
     try {
       await api.postForm('/api/profiles/unstructured', formData);
       fetchProfiles();
-    } catch (e) {
-      alert('Failed to upload and parse resume. Check network.');
+      alert('Resume mapped and stored beautifully!');
+    } catch (e: any) {
+      try {
+        const serverError = JSON.parse(e.message);
+        alert(`Validation Error: ${serverError.message}\n${JSON.stringify(serverError.errors || {})}`);
+      } catch {
+        alert('Failed to upload. See console for details.');
+      }
     } finally {
       setLoading(false);
     }
