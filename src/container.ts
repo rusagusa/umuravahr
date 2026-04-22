@@ -7,11 +7,12 @@
  */
 
 import { initFirebase } from './config/firebase';
+import { initMongoDB } from './config/mongodb';
 
 // Repositories
-import { FirestoreProfileRepository } from './repositories/firestore/FirestoreProfileRepository';
-import { FirestoreJobRepository } from './repositories/firestore/FirestoreJobRepository';
-import { FirestoreScreeningRepository } from './repositories/firestore/FirestoreScreeningRepository';
+import { MongoProfileRepository } from './repositories/mongodb/MongoProfileRepository';
+import { MongoJobRepository } from './repositories/mongodb/MongoJobRepository';
+import { MongoScreeningRepository } from './repositories/mongodb/MongoScreeningRepository';
 
 // Services
 import { ProfileIngestionService } from './services/ProfileIngestionService';
@@ -25,13 +26,16 @@ import { ProfileController } from './controllers/ProfileController';
 import { ScreeningController } from './controllers/ScreeningController';
 
 export function buildContainer() {
-  // ── Initialize Firebase (idempotent) ──────────────────────────────────────
+  // ── Initialize Databases (idempotent/async) ────────────────────────────────
   initFirebase();
+  initMongoDB().catch(err => {
+    console.error('Failed to initialize MongoDB:', err);
+  });
 
   // ── Repositories ──────────────────────────────────────────────────────────
-  const profileRepo = new FirestoreProfileRepository();
-  const jobRepo = new FirestoreJobRepository();
-  const screeningRepo = new FirestoreScreeningRepository();
+  const profileRepo = new MongoProfileRepository();
+  const jobRepo = new MongoJobRepository();
+  const screeningRepo = new MongoScreeningRepository();
 
   // ── Services ──────────────────────────────────────────────────────────────
   const ingestionService = new ProfileIngestionService(profileRepo);
