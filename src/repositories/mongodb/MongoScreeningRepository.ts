@@ -9,12 +9,15 @@ export class MongoScreeningRepository implements IScreeningRepository {
   }
 
   async findByJobId(jobId: string): Promise<IScreeningResult[]> {
-    const docs = await ScreeningResultModel.find({ jobId }).sort({ candidateRank: 1 });
+    const docs = await ScreeningResultModel.find({ jobId })
+      .populate('profileId')
+      .sort({ candidateRank: 1 });
     return docs.map(doc => doc.toJSON() as IScreeningResult);
   }
 
-  async findShortlist(jobId: string, topN: number = 3): Promise<IScreeningResult[]> {
+  async findShortlist(jobId: string, topN: number = 50): Promise<IScreeningResult[]> {
     const docs = await ScreeningResultModel.find({ jobId })
+      .populate('profileId')
       .sort({ candidateRank: 1 })
       .limit(topN);
     return docs.map(doc => doc.toJSON() as IScreeningResult);

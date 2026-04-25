@@ -108,6 +108,7 @@ export interface IProfile {
 
 export interface IJob {
   id?: string;
+  recruiterId?: string;
   title: string;
   description: string;
   department?: string;

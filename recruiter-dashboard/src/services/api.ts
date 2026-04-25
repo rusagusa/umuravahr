@@ -2,7 +2,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8
 
 export const api = {
   get: async (endpoint: string) => {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      cache: 'no-store'
+    });
     if (!response.ok) throw new Error(`GET ${endpoint} failed`);
     return response.json();
   },

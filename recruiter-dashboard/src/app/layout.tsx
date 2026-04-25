@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Sidebar from '@/components/Sidebar';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Umurava | AI Recruiter Dashboard',
-  description: 'Enterprise AI Candidate Evaluation Pipeline',
+  title: 'Umurava | AI Recruitment Platform',
+  description: 'Hire top tech talent in minutes, not weeks.',
 };
 
 export default function RootLayout({
@@ -17,11 +16,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased font-sans bg-slate-50 flex h-screen overflow-hidden`}>
-        <Sidebar />
-        <main className="flex-1 max-h-screen overflow-y-auto">
-          {children}
-        </main>
+      <body className={`${inter.variable} antialiased font-sans`}>
+        {children}
       </body>
     </html>
   );

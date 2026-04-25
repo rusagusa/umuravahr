@@ -71,6 +71,8 @@ const ProfileSchema: Schema = new Schema({
     github: { type: String },
     portfolio: { type: String },
   },
+  source: { type: String, enum: ['external', 'umurava'], default: 'external' },
+  appliedJobs: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
   status: { type: String, enum: ['pending', 'shortlisted', 'rejected'], default: 'pending' },
 }, { timestamps: true });
 

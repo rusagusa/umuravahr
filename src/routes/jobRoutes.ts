@@ -10,6 +10,9 @@ export function createJobRouter(controller: JobController): Router {
   /** GET /api/jobs — List all jobs */
   router.get('/', controller.getAll);
 
+  /** GET /api/jobs/:id/candidates — Pre-screening candidate pool */
+  router.get('/:id/candidates', controller.getCandidates);
+
   /** GET /api/jobs/:id — Get a single job */
   router.get('/:id', controller.getById);
 

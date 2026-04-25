@@ -14,7 +14,7 @@ export default function SettingsPage() {
             <User className="w-4 h-4" /> Account
           </button>
         </aside>
-        
+
         <div className="col-span-3 space-y-6">
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
             <h2 className="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Profile Information</h2>
@@ -29,7 +29,7 @@ export default function SettingsPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-6 shadow-sm space-y-4">
             <h2 className="text-xl font-bold text-indigo-900 border-b border-indigo-200/50 pb-2">AI Engine Defaults</h2>
             <div>

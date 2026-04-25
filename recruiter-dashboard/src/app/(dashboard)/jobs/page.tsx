@@ -16,10 +16,10 @@ export default function JobsPage() {
   }, []);
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
-      <Link href="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">
+      <Link href="/dashboard" className="inline-flex items-center text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">
         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
       </Link>
-      
+
       <header className="flex justify-between items-end pb-6 border-b border-slate-200">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">Jobs Hub</h1>
@@ -49,10 +49,10 @@ export default function JobsPage() {
             ) : jobs.map((job) => (
               <tr key={job.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 font-semibold text-slate-800">{job.title}</td>
-                <td className="px-6 py-4 text-slate-500">{job.department || 'General'}</td>
+                <td className="px-6 py-4 text-slate-500">{job.experienceLevel || 'General'}</td>
                 <td className="px-6 py-4 text-slate-500">View Pipeline</td>
                 <td className="px-6 py-4 text-right">
-                  <Link href={`/jobs/${job.id}`} className="text-blue-600 hover:text-blue-800 font-medium">Manage</Link>
+                  <Link href={`/jobs/${job.id}`} className="text-blue-600 hover:text-blue-800 font-medium font-mono text-xs uppercase tracking-widest ring-1 ring-blue-100 px-2 py-1 rounded hover:bg-blue-50 transition-all">Manage Pipeline</Link>
                 </td>
               </tr>
             ))}

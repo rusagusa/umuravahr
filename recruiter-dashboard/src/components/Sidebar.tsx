@@ -1,76 +1,124 @@
 'use client';
-
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Briefcase, Users, Settings, Target } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-// Small utility combined for Tailwind class merging
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { 
+  Briefcase, 
+  Users, 
+  LayoutDashboard, 
+  CreditCard, 
+  FileText, 
+  Settings, 
+  LogOut, 
+  User, 
+  MessageSquare, 
+  UserCircle,
+  Menu,
+  X
+} from 'lucide-react';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const routes = [
-    { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: 'Jobs Hub', href: '/jobs', icon: Briefcase },
-    { name: 'Candidates', href: '/candidates', icon: Users },
-    { name: 'Settings', href: '/settings', icon: Settings },
+  const links = [
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/jobs', label: 'Job Board', icon: Briefcase },
+    { href: '/candidates', label: 'My Workforce', icon: Users },
+    { href: '/talents', label: 'Talents', icon: User },
+    { href: '#', label: 'Management', icon: Settings },
+    { href: '#', label: 'Payments', icon: CreditCard },
+    { href: '#', label: 'Messages', icon: MessageSquare },
+    { href: '#', label: 'Reports', icon: FileText },
+    { href: '/profile', label: 'Profile', icon: UserCircle },
   ];
 
-  return (
-    <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col h-full border-r border-slate-800 shadow-2xl z-20">
-      <div className="p-6">
-        <Link href="/" className="flex items-center gap-3 text-white">
-          <div className="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
-            <Target className="w-6 h-6 text-white" />
+  const navContent = (
+    <>
+      <div className="p-6 pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+              <span className="text-blue-600 font-bold text-xl leading-none">U</span>
+            </div>
+            <span className="font-bold tracking-tight text-white text-xl">Umurava</span>
           </div>
-          <div>
-            <h1 className="font-bold text-lg leading-tight tracking-tight">Umurava</h1>
-            <p className="text-xs text-blue-400 font-medium tracking-wide">Recruiter Engine</p>
-          </div>
-        </Link>
+          {/* Mobile close button */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="md:hidden text-white/80 hover:text-white p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
       </div>
-
-      <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-        Main Menu
-      </div>
-
-      <nav className="flex-1 px-4 space-y-2 mt-2">
-        {routes.map((route) => {
-          const isActive = pathname === route.href || (pathname.startsWith('/jobs') && route.href === '/jobs');
+      
+      <nav className="px-4 pb-4 mt-6 space-y-1 overflow-y-auto flex-1 flex flex-col gap-1 text-blue-100">
+        {links.map((link) => {
+          const isActive = pathname === link.href || (link.href !== '#' && pathname.startsWith(link.href));
           return (
             <Link
-              key={route.name}
-              href={route.href}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium',
+              key={link.label}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center space-x-3 px-4 py-2.5 rounded-md transition-colors ${
                 isActive
-                  ? 'bg-blue-600/10 text-blue-400 font-semibold'
-                  : 'hover:bg-slate-800 hover:text-white'
-              )}
+                  ? 'bg-white/10 text-white font-bold'
+                  : 'hover:bg-blue-500 hover:text-white'
+              }`}
             >
-              <route.icon className={cn('w-5 h-5', isActive ? 'text-blue-500' : 'text-slate-400')} />
-              {route.name}
+              <link.icon className={`w-[18px] h-[18px] ${isActive ? 'text-white' : 'text-blue-200'}`} />
+              <span className="text-[13px]">{link.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-6 border-t border-slate-800">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-slate-700 border border-slate-600 overflow-hidden flex items-center justify-center font-bold text-sm text-white">
-            JD
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold text-white">Jane Doe</span>
-            <span className="text-xs text-slate-500">Recruitment Dir.</span>
-          </div>
-        </div>
+      <div className="mt-auto px-4">
+        <hr className="border-blue-400/30 mb-4" />
       </div>
-    </aside>
+
+      <div className="pb-8 px-4">
+         <button 
+            onClick={() => window.location.href = '/'}
+            className="flex items-center w-full space-x-3 px-4 py-2.5 text-blue-100 hover:bg-white/10 hover:text-white rounded-md transition-colors"
+         >
+            <LogOut className="w-[18px] h-[18px] text-blue-200" />
+            <span className="text-[13px]">Logout</span>
+         </button>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile hamburger button */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className="md:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+        style={{ display: mobileOpen ? 'none' : undefined }}
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar — always visible on md+, drawer on mobile */}
+      <aside className={`
+        bg-blue-600 flex-shrink-0 flex flex-col text-white min-h-screen text-sm font-medium
+        fixed md:relative z-50 md:z-auto
+        w-[260px] md:w-[230px]
+        transition-transform duration-300 ease-in-out
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        {navContent}
+      </aside>
+    </>
   );
 }

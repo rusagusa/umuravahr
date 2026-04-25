@@ -49,9 +49,15 @@ export function buildContainer() {
   );
 
   // ── Controllers ───────────────────────────────────────────────────────────
-  const jobController = new JobController(jobRepo);
+  const jobController = new JobController(jobRepo, profileRepo);
   const profileController = new ProfileController(ingestionService, documentParser, geminiGateway, profileRepo);
   const screeningController = new ScreeningController(orchestrator);
 
-  return { jobController, profileController, screeningController };
+  return { 
+    jobController, 
+    profileController, 
+    screeningController,
+    jobRepo,
+    profileRepo
+  };
 }

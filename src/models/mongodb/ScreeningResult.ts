@@ -4,8 +4,8 @@ import type { IScreeningResult } from '../../types';
 export interface IScreeningResultDocument extends Omit<IScreeningResult, 'id'>, Document {}
 
 const ScreeningResultSchema: Schema = new Schema({
-  jobId: { type: String, required: true, index: true },
-  profileId: { type: String, required: true, index: true },
+  jobId: { type: String, ref: 'Job', required: true, index: true },
+  profileId: { type: String, ref: 'Profile', required: true, index: true },
   candidateRank: { type: Number, required: true },
   matchScore: { type: Number, required: true },
   strengths: [{ type: String }],

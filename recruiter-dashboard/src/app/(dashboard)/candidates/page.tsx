@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Users, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { api } from '@/services/api';
 
 export default function CandidatesPage() {
@@ -39,9 +39,9 @@ export default function CandidatesPage() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading ? (
-              <tr><td colSpan={4} className="px-6 py-8 text-center text-slate-500">Loading candidate pool...</td></tr>
+              <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-500">Loading candidate pool...</td></tr>
             ) : candidates.length === 0 ? (
-              <tr><td colSpan={4} className="px-6 py-8 text-center text-slate-500">No applicants found.</td></tr>
+              <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-500">No applicants found.</td></tr>
             ) : candidates.map(cand => (
               <tr key={cand.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 font-mono text-slate-500 text-xs">{cand.id?.substring(0, 8)}...</td>
@@ -60,7 +60,7 @@ export default function CandidatesPage() {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-slate-500 text-xs truncate max-w-[300px]">
-                   {cand.skills?.join(', ') || 'None'}
+                   {cand.skills?.map((s: any) => s.name).join(', ') || 'None'}
                 </td>
               </tr>
             ))}

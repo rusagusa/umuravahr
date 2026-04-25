@@ -11,8 +11,8 @@ export interface IJobRepository {
   /** Fetch a single job by id. Returns null if not found. */
   findById(id: string): Promise<IJob | null>;
 
-  /** Fetch all stored jobs. */
-  findAll(): Promise<IJob[]>;
+  /** Fetch all stored jobs, optionally filtered by recruiter. */
+  findAll(filter?: { recruiterId?: string }): Promise<IJob[]>;
 
   /** Update an existing job. Returns the updated document. */
   update(id: string, data: Partial<IJob>): Promise<IJob | null>;

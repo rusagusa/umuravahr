@@ -4,6 +4,7 @@ import type { IJob } from '../../types';
 export interface IJobDocument extends Omit<IJob, 'id'>, Document {}
 
 const JobSchema: Schema = new Schema({
+  recruiterId: { type: Schema.Types.ObjectId, ref: 'Recruiter', required: false },
   title: { type: String, required: true },
   description: { type: String, required: true },
   department: { type: String },

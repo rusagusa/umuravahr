@@ -24,6 +24,9 @@ export interface IProfileRepository {
   /** Specifically updates the pipeline state of a candidate */
   updateStatus(id: string, status: 'pending' | 'shortlisted' | 'rejected'): Promise<IProfile | null>;
 
+  /** Count external profiles applied to a specific job. */
+  countExternalByJob(jobId: string): Promise<number>;
+
   /** Remove a profile. */
   delete(id: string): Promise<void>;
 }
